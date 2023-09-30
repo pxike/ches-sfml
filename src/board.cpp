@@ -71,6 +71,7 @@ Piece* Board::getPieceAt(const std::vector<int>& position) const {
 }
 void Board::set(Piece* x, int j, int i)
 {
+    //the null check i added to fix the code 
     if (x == nullptr) return;
     Piece* pt = pieces[loo[x][0]][loo[x][1]];
     if (!possi(*x, j, i)) return;

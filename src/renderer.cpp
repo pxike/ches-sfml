@@ -53,11 +53,12 @@ void Renderer::eventhandler() {
 
 void Renderer::setinplace()
 {
+    // null check
     if (thechosen == nullptr) return;
 	sf::Vector2i x = sf::Mouse::getPosition(win) / 80;
 	thechosen->setPosition(sf::Vector2f((x) * 80) + sf::Vector2f(5, 5));
+    // this gets called for somereason 
 	board.set(love[thechosen], x.x, x.y);
-    
 
 }
 void Renderer::drawChessboard() {
