@@ -26,14 +26,15 @@ void Renderer::eventhandler() {
         case sf::Event::MouseButtonPressed: {
 
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(win));
-                for (auto& xxx :love)
+                for (std::pair<sf::Sprite*,Piece*> xxx :love)
                 {
-	                if (xxx.first->getGlobalBounds().contains(mousePosition))
-	                {
-                        drag = true;
-	                	offset = xxx.first->getPosition() - mousePosition;
-                        thechosen = xxx.first;
-	                }
+                	if (xxx.first->getGlobalBounds().contains(mousePosition) && board.turn % 2 == xxx.second->coly){
+                		board.turn += 1;
+                		drag = true;
+                		offset = xxx.first->getPosition() - mousePosition;
+                		thechosen = xxx.first;
+                	}
+
                 }
 
             break;
@@ -52,9 +53,11 @@ void Renderer::eventhandler() {
 
 void Renderer::setinplace()
 {
-    sf::Vector2i x = sf::Mouse::getPosition(win) / 80;
-    thechosen->setPosition(sf::Vector2f((x )*80 ) + sf::Vector2f(5,5));
-    board.set(love[thechosen], x.x, x.y);
+    if (thechosen == nullptr) return;
+	sf::Vector2i x = sf::Mouse::getPosition(win) / 80;
+	thechosen->setPosition(sf::Vector2f((x) * 80) + sf::Vector2f(5, 5));
+	board.set(love[thechosen], x.x, x.y);
+    
 
 }
 void Renderer::drawChessboard() {
