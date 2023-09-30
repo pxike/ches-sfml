@@ -29,7 +29,7 @@ void Renderer::eventhandler() {
                 for (std::pair<sf::Sprite*,Piece*> xxx :love)
                 {
                 	if (xxx.first->getGlobalBounds().contains(mousePosition) && board.turn % 2 == xxx.second->coly){
-                		board.turn += 1;
+                		
                 		drag = true;
                 		offset = xxx.first->getPosition() - mousePosition;
                 		thechosen = xxx.first;
@@ -109,9 +109,21 @@ void Renderer::displayer() {
         sf::Vector2f mousePosition = static_cast<sf::Vector2f> (sf::Mouse::getPosition(win));
         if (thechosen != nullptr) thechosen->setPosition(mousePosition + offset);
     }
+    text_stuff();
     win.display();
 }
-
+void Renderer::text_stuff()
+{
+    std::string x = board.turn % 2 ? "Black's turn" : "White's turn";
+    sf::Font font;
+    font.loadFromFile(R"(C:\Windows\Fonts\arialbd.ttf)");
+    sf::Text title("Chess", font, 50);
+    title.setPosition(700, 20);
+    win.draw(title);
+    sf::Text turn(x, font, 25);
+    turn.setPosition(700, 100);
+    win.draw(turn);
+}
 sf::Vector2<int> Renderer::getpos(){
 	sf::Vector2i mousePosition = (sf::Mouse::getPosition(win) / 80);
     std::cout << "Mouse Position: x = " << mousePosition.x << ", y = " << mousePosition.y << std::endl;

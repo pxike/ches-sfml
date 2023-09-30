@@ -74,18 +74,38 @@ void Board::set(Piece* x, int j, int i)
     //the null check i added to fix the code 
     if (x == nullptr) return;
     Piece* pt = pieces[loo[x][0]][loo[x][1]];
-    if (!possi(*x, j, i)) return;
+    if (!possiblemove(*x, j, i)) return;
 	pieces[loo[x][0]][loo[x][1]] = nullptr;
     loo[x] = { i , j };
     pieces[i][j] = pt;
+    turn += 1;
 }
 
+bool Board::specialmove(Piece& x, int j, int i)
+{
+    int current_y = loo[&x][1]; int current_x = loo[&x][0];
+    switch (x.topy) {
+    case Piece::King: 
+		{
 
+		}
+    case Piece::Rook:
+	    {
+		    
+	    }
+    case Piece::Pawn:
+	    {
+		    
+	    }
+    }
+    return false;
+}
 
-bool Board::possi(Piece& x, int j, int i) {
+bool Board::possiblemove(Piece& x, int j, int i) {
 
     int current_y = loo[&x][1]; int current_x = loo[&x][0];
-    if (pieces[i][j] != nullptr &&(current_y == j && current_x == i || x.coly == pieces[i][j]->coly)) return false;
+    if (current_y == j && current_x == i) return false;
+    if (pieces[i][j] != nullptr && x.coly == pieces[i][j]->coly) return false;
 
     int stepin_x  = (i != current_x) ? ((i > current_x) ? 1 : -1) : 0;
     int stepin_y  = (j != current_y) ? ((j > current_y) ? 1 : -1) : 0;
@@ -136,11 +156,14 @@ bool Board::possi(Piece& x, int j, int i) {
         return false;
     }
     case Piece::Pawn: {
+
         if (x.coly == Piece::White) {
-            int check1 = current_x - i, check2 = current_y - j;
+            int check1 = current_x - i,     check2 = current_y - j;
+
             if (!check2 && check1 == -1)    return      pieces[i][j] == nullptr;
             if ( check2 && check1 == -1)    return      pieces[i][j] != nullptr;
             if (!check2 && check1 == -2)    return      current_x == 1;
+            
             return false;
         }
         if (x.coly == Piece::Black) {

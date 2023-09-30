@@ -2,14 +2,10 @@
 #include <SFML/Graphics.hpp>
 #include <filesystem>
 #include <vector>
-#include <math.h>
-#include <functional>
-#include <iostream>
 #include <map>
 
 #include <string>
 #include <vector>
-#include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
 #include <map>
@@ -21,14 +17,10 @@ public:
     enum Color { White, Black };
     enum Type { Rook, Knight, King, Queen, Bishop, Pawn };
     Piece(Color c, Type t);
-
     std::string getpng();
 
     Color coly;
     Type topy;
-
-   
-
 };
 
 
@@ -43,8 +35,9 @@ public:
 
     std::vector<int> getpos(Piece* p);
     Piece* getPieceAt(const std::vector<int>& position) const;
-    bool possi(Piece& x, int j, int i);
+    bool possiblemove(Piece& x, int j, int i);
     void set(Piece* x, int j, int i);
+    bool specialmove(Piece& x, int j, int i);
     std::vector<std::vector<Piece*>> pieces;
     std::map<Piece*, std::vector<int>> loo;
     int turn = 0;
@@ -78,6 +71,7 @@ private:
 
     void draw_pieces() ;
     void displayer();
+    void text_stuff();
     sf::Vector2<int> getpos();
     Renderer();
 
